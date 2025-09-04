@@ -74,13 +74,13 @@ app.post('/api/contact', async (req, res) => {
     const transporter = createTransporter();
 
     const mailOptions = {
-      from: process.env.EMAIL_USER || 'your-email@gmail.com',
+      from: process.env.EMAIL_USER,
       to: 'nexivatech@gmail.com',
       subject: 'New Contact Us Form Submission',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background: linear-gradient(135deg, #10c6cc, #022e75); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h2 style="color: #ffffff; margin: 0; text-align: center;">New Contact Us Form Submission</h2>
+            <h2 style="color: #ffffff; margin: 0; text-align: center;">Contact Us Form</h2>
           </div>
           
           <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
@@ -183,13 +183,13 @@ app.post('/api/career', upload.single('resume'), async (req, res) => {
     const displayJobTitle = jobTitleMap[jobTitle] || jobTitle;
 
     const mailOptions = {
-      from: process.env.EMAIL_USER || 'your-email@gmail.com',
+      from: process.env.EMAIL_USER,
       to: 'nexivatech@gmail.com',
       subject: `New Job Application - ${displayJobTitle}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background: linear-gradient(135deg, #10c6cc, #022e75); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h2 style="color:  #ffffff; margin: 0; text-align: center;">New Job Application Received</h2>
+            <h2 style="color:  #ffffff; margin: 0; text-align: center;">Job Application</h2>
             <p style="color:  #ffffff; text-align: center; margin: 10px 0 0 0;">Position: ${displayJobTitle}</p>
           </div>
           
