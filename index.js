@@ -10,9 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'], 
-  credentials: true
+  origin: ["http://localhost:3000", "https://nexivatech-website.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"]
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
