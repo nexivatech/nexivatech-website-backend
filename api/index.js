@@ -7,6 +7,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
+const serverless = require("serverless-http");
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
@@ -350,5 +351,6 @@ app.use((error, req, res, next) => {
 //   console.log(`📧 Email will be sent to: nexivatech@gmail.com`);
 //   console.log(`📁 File uploads directory: ${uploadsDir}`);
 // });
-
+const app = require("../index");
 module.exports = app;
+module.exports.handler = serverless(app);
