@@ -73,51 +73,69 @@ app.post('/api/contact', async (req, res) => {
 
     const transporter = createTransporter();
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: 'nexivatech@gmail.com',
-      subject: 'New Contact Us Form Submission',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #10c6cc, #022e75); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h2 style="color: #ffffff; margin: 0; text-align: center;">Contact Us Form</h2>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-            <h3 style="color: #022e75; margin-bottom: 15px;">Contact Details:</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Full Name:</td>
-                <td style="padding: 10px; color: #333;">${firstName}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Company:</td>
-                <td style="padding: 10px; color: #333;">${company || 'Not provided'}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Email:</td>
-                <td style="padding: 10px; color: #333;">${email}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Phone Number:</td>
-                <td style="padding: 10px; color: #333;">${phoneNumber}</td>
-              </tr>
-            </table>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
-            <h3 style="color: #022e75; margin-bottom: 15px;">Message:</h3>
-            <p style="color: #333; line-height: 1.6; margin: 0;">${message}</p>
-          </div>
-          
-          <div style="text-align: center; margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
-            <p style="margin: 0; color: #666; font-size: 14px;">
-              This message was sent from your website's contact form on ${new Date().toLocaleString()}
-            </p>
+const mailOptions = {
+  from: process.env.EMAIL_USER,
+  to: "nexivatech@gmail.com",
+  subject: "Contact Us Form Submission",
+  html: `
+  <div style="font-family: 'Segoe UI', Roboto, Arial, sans-serif; background-color:#eef2f7; padding:40px 15px;">
+    <div style="max-width:650px; margin:0 auto; background:#ffffff; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.08); overflow:hidden;">
+      
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #0f4c81, #10c6cc); padding:30px; text-align:center;">
+        <h2 style="margin:0; color:#ffffff; font-size:24px; font-weight:600; letter-spacing:0.5px;">Contact Us Form </h2>
+      </div>
+
+      <!-- Body -->
+      <div style="padding:30px;">
+        
+        <!-- Contact Info -->
+        <div style="margin-bottom:25px;">
+          <h3 style="margin:0 0 15px 0; color:#0f4c81; font-size:19px; border-left:4px solid #10c6cc; padding-left:10px;">Contact Information</h3>
+          <table style="width:100%; border-collapse:collapse; font-size:15px;">
+            <tr style="background:#f9fafc;">
+              <td style="padding:12px 10px; font-weight:600; color:#333; width:35%;">Full Name</td>
+              <td style="padding:12px 10px; color:#555;">${firstName}</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 10px; font-weight:600; color:#333;">Company</td>
+              <td style="padding:12px 10px; color:#555;">${company || 'Not provided'}</td>
+            </tr>
+            <tr style="background:#f9fafc;">
+              <td style="padding:12px 10px; font-weight:600; color:#333;">Email</td>
+              <td style="padding:12px 10px; color:#555;">${email}</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 10px; font-weight:600; color:#333;">Phone</td>
+              <td style="padding:12px 10px; color:#555;">${phoneNumber}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Message -->
+        <div style="margin-bottom:25px;">
+          <h3 style="margin:0 0 15px 0; color:#0f4c81; font-size:19px; border-left:4px solid #10c6cc; padding-left:10px;">Message</h3>
+          <div style="background:#f9fafc; padding:20px; border-radius:10px; color:#444; line-height:1.6; font-size:15px;">
+            ${message}
           </div>
         </div>
-      `
-    };
+
+        <!-- CTA -->
+        <div style="text-align:center; margin:30px 0;">
+          <a href="mailto:${email}" style="background:linear-gradient(135deg, #0f4c81, #10c6cc); color:#ffffff; text-decoration:none; padding:12px 25px; border-radius:8px; font-size:15px; font-weight:500; display:inline-block;">Reply to ${firstName}</a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="background:linear-gradient(135deg, #0f4c81, #10c6cc); padding:20px; text-align:center; color:#ffffff; font-size:13px;">
+        <p style="margin:0;">📅 Submitted on ${new Date().toLocaleString()}</p>
+      </div>
+    </div>
+  </div>
+  `
+};
+
+
 
     await transporter.sendMail(mailOptions);
 
@@ -182,82 +200,93 @@ app.post('/api/career', upload.single('resume'), async (req, res) => {
 
     const displayJobTitle = jobTitleMap[jobTitle] || jobTitle;
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: 'nexivatech@gmail.com',
-      subject: `New Job Application - ${displayJobTitle}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: linear-gradient(135deg, #10c6cc, #022e75); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
-            <h2 style="color:  #ffffff; margin: 0; text-align: center;">Job Application</h2>
-            <p style="color:  #ffffff; text-align: center; margin: 10px 0 0 0;">Position: ${displayJobTitle}</p>
-          </div>
-          
-          <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-            <h3 style="color: #022e75; margin-bottom: 15px;">Personal Information:</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Name:</td>
-                <td style="padding: 10px; color: #333;">${firstName} ${lastName}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Email:</td>
-                <td style="padding: 10px; color: #333;">${email}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Phone:</td>
-                <td style="padding: 10px; color: #333;">${phone}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Location:</td>
-                <td style="padding: 10px; color: #333;">${location}</td>
-              </tr>
-            </table>
-          </div>
+const mailOptions = {
+  from: process.env.EMAIL_USER,
+  to: "nexivatech@gmail.com",
+  subject: `New Job Application - ${displayJobTitle}`,
+  html: `
+  <div style="font-family: 'Segoe UI', Roboto, Arial, sans-serif; background-color:#eef2f7; padding:40px 15px;">
+    <div style="max-width:650px; margin:0 auto; background:#ffffff; border-radius:14px; box-shadow:0 6px 20px rgba(0,0,0,0.08); overflow:hidden;">
+      
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #0f4c81, #10c6cc); padding:30px; text-align:center;">
+        <h2 style="margin:0; color:#ffffff; font-size:24px; font-weight:600; letter-spacing:0.5px;">Job Application</h2>
+        <p style="margin:8px 0 0 0; color:#e0f7fa; font-size:15px;">Position Applied: <b>${displayJobTitle}</b></p>
+      </div>
 
-          <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
-            <h3 style="color: #022e75; margin-bottom: 15px;">Professional Information:</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Applied Position:</td>
-                <td style="padding: 10px; color: #333;">${displayJobTitle}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Current Role:</td>
-                <td style="padding: 10px; color: #333;">${currentRole}</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Experience:</td>
-                <td style="padding: 10px; color: #333;">${experience} years</td>
-              </tr>
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">LinkedIn Profile:</td>
-                <td style="padding: 10px;"><a href="${linkedin}" style="color: #10c6cc;">${linkedin}</a></td>
-              </tr>
-              ${portfolio ? `
-              <tr style="border-bottom: 1px solid #ddd;">
-                <td style="padding: 10px; font-weight: bold; color: #555;">Portfolio/GitHub:</td>
-                <td style="padding: 10px;"><a href="${portfolio}" style="color: #10c6cc;">${portfolio}</a></td>
-              </tr>
-              ` : ''}
-            </table>
-          </div>
-          
-          <div style="text-align: center; margin-top: 20px; padding: 15px; background: #e8f4f8; border-radius: 8px;">
-            <p style="margin: 0; color: #666; font-size: 14px;">
-              Application submitted on ${new Date().toLocaleString()}<br>
-              Resume attached: ${req.file.originalname}
-            </p>
-          </div>
-        </div>
-      `,
-      attachments: [
-        {
-          filename: req.file.originalname,
-          path: req.file.path
-        }
-      ]
-    };
+      <!-- Personal Info -->
+      <div style="padding:30px; border-bottom:1px solid #eee;">
+        <h3 style="margin:0 0 15px 0; color:#0f4c81; font-size:19px; border-left:4px solid #10c6cc; padding-left:10px;">👤 Personal Information</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+          <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333; width:35%;">Name</td>
+            <td style="padding:12px 10px; color:#555;">${firstName} ${lastName}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Email</td>
+            <td style="padding:12px 10px; color:#555;">${email}</td>
+          </tr>
+          <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Phone</td>
+            <td style="padding:12px 10px; color:#555;">${phone}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Location</td>
+            <td style="padding:12px 10px; color:#555;">${location}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Professional Info -->
+      <div style="padding:30px; border-bottom:1px solid #eee;">
+        <h3 style="margin:0 0 15px 0; color:#0f4c81; font-size:19px; border-left:4px solid #10c6cc; padding-left:10px;">💼 Professional Information</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:15px;">
+          <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333; width:35%;">Applied Position</td>
+            <td style="padding:12px 10px; color:#555;">${displayJobTitle}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Current Role</td>
+            <td style="padding:12px 10px; color:#555;">${currentRole}</td>
+          </tr>
+          <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Experience</td>
+            <td style="padding:12px 10px; color:#555;">${experience} years</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 10px; font-weight:600; color:#333;">LinkedIn</td>
+            <td style="padding:12px 10px;"><a href="${linkedin}" style="color:#10c6cc; text-decoration:none;">${linkedin}</a></td>
+          </tr>
+          ${portfolio ? `
+          <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Portfolio/GitHub</td>
+            <td style="padding:12px 10px;"><a href="${portfolio}" style="color:#10c6cc; text-decoration:none;">${portfolio}</a></td>
+          </tr>
+          ` : ""}
+        </table>
+      </div>
+
+      <!-- Resume Section -->
+      <div style="padding:25px; background:#f9fbfd; text-align:center;">
+        <p style="margin:0; font-size:15px; color:#333;">
+          📎 Resume Attached: <b>${req.file.originalname}</b>
+        </p>
+      </div>
+
+      <!-- Footer -->
+      <div style="background:linear-gradient(135deg, #0f4c81, #10c6cc); padding:20px; text-align:center; color:#ffffff; font-size:13px;">
+        <p style="margin:0;">📅 Application submitted on ${new Date().toLocaleString()}</p>
+      </div>
+    </div>
+  </div>
+  `,
+  attachments: [
+    {
+      filename: req.file.originalname,
+      path: req.file.path
+    }
+  ]
+};
 
     await transporter.sendMail(mailOptions);
 
