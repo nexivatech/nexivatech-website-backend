@@ -7,11 +7,10 @@ const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
-const serverless = require("serverless-http");
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ['https://nexivatech-website.vercel.app', 'http://localhost:3000'], 
+  origin: ['http://localhost:3000', 'http://localhost:3001'], 
   credentials: true
 }));
 
@@ -346,11 +345,10 @@ app.use((error, req, res, next) => {
   });
 });
 
-// app.listen(PORT, () => {
-//   console.log(`🚀 Server is running on http://localhost:${PORT}`);
-//   console.log(`📧 Email will be sent to: nexivatech@gmail.com`);
-//   console.log(`📁 File uploads directory: ${uploadsDir}`);
-// });
-const app = require("../index");
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+  console.log(`📧 Email will be sent to: nexivatech@gmail.com`);
+  console.log(`📁 File uploads directory: ${uploadsDir}`);
+});
+
 module.exports = app;
-module.exports.handler = serverless(app);
