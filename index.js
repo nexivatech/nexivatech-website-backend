@@ -165,11 +165,13 @@ app.post('/api/career', upload.single('resume'), async (req, res) => {
       location,
       currentRole,
       experience,
+      expectedSalary,
+      joiningDate,
       portfolio,
       linkedin
     } = req.body;
 
-    if (!firstName || !lastName || !email || !phone || !jobTitle || !location || !currentRole || !experience || !linkedin) {
+    if (!firstName || !lastName || !email || !phone || !jobTitle || !location || !currentRole || !experience || !expectedSalary || !joiningDate || !linkedin) {
       return res.status(400).json({
         success: false,
         message: 'Please fill in all required fields'
@@ -253,6 +255,14 @@ const mailOptions = {
           <tr style="background:#f9fafc;">
             <td style="padding:12px 10px; font-weight:600; color:#333;">Experience</td>
             <td style="padding:12px 10px; color:#555;">${experience} years</td>
+          </tr>
+           <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Expected Sallary</td>
+            <td style="padding:12px 10px; color:#555;">${expectedSalary}</td>
+          </tr>
+             <tr style="background:#f9fafc;">
+            <td style="padding:12px 10px; font-weight:600; color:#333;">Joining Date</td>
+            <td style="padding:12px 10px; color:#555;">${joiningDate}</td>
           </tr>
           <tr>
             <td style="padding:12px 10px; font-weight:600; color:#333;">LinkedIn</td>
@@ -346,9 +356,6 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📧 Email will be sent to: nexivatech@gmail.com`);
-  console.log(`📁 File uploads directory: ${uploadsDir}`);
 });
 
 module.exports = app;
