@@ -136,8 +136,6 @@ const mailOptions = {
   `
 };
 
-
-
     await transporter.sendMail(mailOptions);
 
     res.status(200).json({
@@ -145,7 +143,9 @@ const mailOptions = {
       message: 'Contact form submitted successfully!'
     });
 
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error('Contact form error:', error);
     res.status(500).json({
       success: false,
@@ -306,7 +306,9 @@ const mailOptions = {
       message: 'Application submitted successfully!'
     });
 
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error('Career form error:', error);
     
     if (req.file) {
